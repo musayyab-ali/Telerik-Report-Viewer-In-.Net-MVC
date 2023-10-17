@@ -1,0 +1,55 @@
+@using TelerikReportViewer.Views.Home
+@using Telerik.Reporting
+@using Telerik.ReportViewer.Mvc
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Telerik MVC HTML5 Report Viewer</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <link href="https://kendo.cdn.telerik.com/2022.3.913/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="~/Content/kendo/2021.3.914/kendo.highcontrast.min.css" rel="stylesheet" />
+
+    <style>
+        #reportViewer1 {
+            position: relative;
+            width: 1300px;
+            height: 800px;
+            font-family: Verdana, Arial;
+        }
+    </style>
+    <script src="~/Scripts/resources.es.js"></script>
+    <!--If Kendo is used it should be added before the report viewer.-->
+    <script src="@Url.Content("~/api/reports/resources/js/telerikReportViewer-17.2.23.1010.min.js/")"></script>
+
+</head>
+<body style="margin-left: 22%; margin-top: 5%;">
+    @(Html.TelerikReporting().ReportViewer()
+        .Id("reportViewer1")
+        .ServiceUrl(Url.Content("~/api/reports"))
+        .ReportSource(new UriReportSource() { Uri = "PersonInfoReport.trdp" })
+        .ViewMode(ViewMode.Interactive)
+        .ScaleMode(ScaleMode.FitPageWidth)
+        .Scale(1.0)
+        .PersistSession(false)
+        .PrintMode(PrintMode.AutoSelect)
+        .SendEmail(new SendEmail { Enabled = false })
+        .EnableAccessibility(false)
+
+        //Parameter appear as DropDownList
+        .Parameters(new Parameters { Editors = new Editors { MultiSelect = EditorTypes.ComboBox, SingleSelect = EditorTypes.ComboBox } })
+
+        // Net Core
+        //.Parameters(new ParametersOptions { Editors = new EditorsOptions { MultiSelect = EditorType.ComboBox, SingleSelect = EditorType.ComboBox } })
+)
+
+</body>
+</html>
